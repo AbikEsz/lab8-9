@@ -1,26 +1,13 @@
-"""
-Ақпараттар және кодтау теориясы
-ӘН8: Префикстік кодтар. Фано шарты
-ӘН9: Кедергіге төзімді кодтау. Хэмминг коды
-
-2-нұсқа
-"""
 import math
-
-# ======================= ДЕРЕКТЕР (нұсқа параметрлері) =======================
-# ӘН8
+#1
 N_ALPHABET = 47
 PREFIX_CODE = {"A": "0", "B": "10", "C": "110", "D": "111"}
 MESSAGE = "011011110"
 
-# ӘН9
-INFO_BITS = "0111"      # ақпараттық комбинация (n_i = 4)
-ERROR_POSITION = 5    # бұрмаланған разряд нөмірі (1-ден бастап)
+INFO_BITS = "0111"     
+ERROR_POSITION = 5   
 
-
-# =============================== ӘН8 ===============================
 def min_uniform_bits(n: int) -> int:
-    """Ең кіші k: 2^k >= N."""
     k = 0
     while 2 ** k < n:
         k += 1
@@ -28,13 +15,11 @@ def min_uniform_bits(n: int) -> int:
 
 
 def satisfies_fano(code: dict) -> bool:
-    """Фано шарты: ешбір кодтық сөз басқа кодтық сөздің басы емес."""
     words = list(code.values())
     return not any(a != b and b.startswith(a) for a in words for b in words)
 
 
 def decode_prefix(message: str, code: dict) -> str:
-    """Хабарды солдан оңға қарай декодтау."""
     inverse = {v: k for k, v in code.items()}
     result, buf, parts = [], "", []
     for bit in message:
@@ -50,7 +35,7 @@ def decode_prefix(message: str, code: dict) -> str:
 
 def seminar_8():
     print("=" * 60)
-    print("ӘН8. Префикстік кодтар. Фано шарты")
+    print("Префикстік кодтар. Фано шарты")
     print("=" * 60)
     k = min_uniform_bits(N_ALPHABET)
     print(f"1-есеп. N = {N_ALPHABET}")
@@ -64,9 +49,8 @@ def seminar_8():
     print(f"  Жауап: {decoded}")
 
 
-# =============================== ӘН9 ===============================
+#2
 def check_bits_count(n_i: int) -> int:
-    """Ең кіші n_k: 2^n_k >= n_i + n_k + 1."""
     n_k = 1
     while 2 ** n_k < n_i + n_k + 1:
         n_k += 1
@@ -78,7 +62,6 @@ def is_power_of_two(x: int) -> bool:
 
 
 def check_positions(p: int, n: int) -> list:
-    """p-ші бақылау символы (позиция p) тексеретін позициялар."""
     return [i for i in range(1, n + 1) if i & p]
 
 
@@ -137,7 +120,7 @@ def flip(word: str, pos: int) -> str:
 
 def seminar_9():
     print("\n" + "=" * 60)
-    print("ӘН9. Кедергіге төзімді кодтау. Хэмминг коды")
+    print("Кедергіге төзімді кодтау. Хэмминг коды")
     print("=" * 60)
     print(f"1-есеп. Ақпараттық комбинация: {INFO_BITS}")
     C = hamming_encode(INFO_BITS)
